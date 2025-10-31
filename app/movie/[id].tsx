@@ -47,7 +47,7 @@ export default function MovieDetail() {
 
   return (
     <LinearGradient
-      colors={["#000000", "#000000", "#070016", "#212267"]}
+      colors={["#000000", "#000000", "#000000", "#070016", "#212267"]}
       style={styles.gradientParent}
     >
       <View style={styles.innerContainer}>

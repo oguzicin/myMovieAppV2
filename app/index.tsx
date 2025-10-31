@@ -252,7 +252,7 @@ useEffect(() => {
 
   return (
     <LinearGradient
-      colors={["#000000", "#000000", "#070016", "#212267"]}
+      colors={["#000000", "#000000", "#000000", "#070016", "#212267"]}
       style={styles.container}
     >
       <View style={styles.innerContainer}>
