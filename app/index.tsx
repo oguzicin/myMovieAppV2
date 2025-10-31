@@ -20,7 +20,6 @@ import {
 
 const API_KEY = process.env.EXPO_PUBLIC_OMDB_API_KEY;
 
-
 const POPULAR_MOVIES = [
   "tt0111161",
   "tt0068646",
@@ -131,7 +130,7 @@ const HomeScreen = () => {
     fetchRandomMovies();
   }, []);
   */
-/*
+  /*
 useEffect(() => {
   const fetchRandomMovies = async () => {
     setLoading(true);
@@ -162,57 +161,57 @@ useEffect(() => {
 }, []);
 */
 
+  useEffect(() => {
+    const fetchMoviesOncePerDay = async () => {
+      setLoading(true);
+      try {
+        // AsyncStorage'dan veri al
+        const storedData = await AsyncStorage.getItem("cachedMovies");
+        const storedTime = await AsyncStorage.getItem("cachedTime");
 
-useEffect(() => {
-  const fetchMoviesOncePerDay = async () => {
-    setLoading(true);
-    try {
-      // AsyncStorage'dan veri al
-      const storedData = await AsyncStorage.getItem("cachedMovies");
-      const storedTime = await AsyncStorage.getItem("cachedTime");
-
-      // Eğer 24-12 saat geçmediyse, önbellekten yükle
-      if (storedData && storedTime) {
-        const diffHours = dayjs().diff(dayjs(storedTime), "hour");
-        if (diffHours < 12) {
-          setResults(JSON.parse(storedData));
-          setLoading(false);
-          return;
+        // Eğer 24-12 saat geçmediyse, önbellekten yükle
+        if (storedData && storedTime) {
+          const diffHours = dayjs().diff(dayjs(storedTime), "hour");
+          if (diffHours < 12) {
+            setResults(JSON.parse(storedData));
+            setLoading(false);
+            return;
+          }
         }
+
+        // 24 saat geçmişse veya veri yoksa API'den çek
+        const shuffled = POPULAR_MOVIES.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 10);
+        const fetchedMovies: any[] = [];
+
+        const promises = selected.map(async (id) => {
+          const res = await fetch(
+            `https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`
+          );
+          const data = await res.json();
+          if (data.Response === "True") fetchedMovies.push(data);
+        });
+
+        await Promise.all(promises);
+
+        // Yeni veriyi kaydet
+        await AsyncStorage.setItem(
+          "cachedMovies",
+          JSON.stringify(fetchedMovies)
+        );
+        await AsyncStorage.setItem("cachedTime", dayjs().toISOString());
+
+        setResults(fetchedMovies);
+      } catch (err) {
+        console.error(err);
+        setResults([]);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      // 24 saat geçmişse veya veri yoksa API'den çek
-      const shuffled = POPULAR_MOVIES.sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, 10);
-      const fetchedMovies: any[] = [];
-
-      const promises = selected.map(async (id) => {
-        const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`);
-        const data = await res.json();
-        if (data.Response === "True") fetchedMovies.push(data);
-      });
-
-      await Promise.all(promises);
-
-      // Yeni veriyi kaydet
-      await AsyncStorage.setItem("cachedMovies", JSON.stringify(fetchedMovies));
-      await AsyncStorage.setItem("cachedTime", dayjs().toISOString());
-
-      setResults(fetchedMovies);
-    } catch (err) {
-      console.error(err);
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchMoviesOncePerDay();
-}, []);
-
-
-
-
+    fetchMoviesOncePerDay();
+  }, []);
 
   // Harf girerken dropdown
   const handleDropdownSearch = async (text: string) => {
@@ -241,18 +240,15 @@ useEffect(() => {
   };
 
   // Film seçildiğinde
-const handleSelectMovie = (movie: any) => {
-  setQuery(movie.Title);
-  setShowDropdown(false);
-  Keyboard.dismiss();
-  router.push({
-    pathname: "./movie/[id]",
-    params: { id: movie.imdbID },
-  });
-};
-
-
-
+  const handleSelectMovie = (movie: any) => {
+    setQuery(movie.Title);
+    setShowDropdown(false);
+    Keyboard.dismiss();
+    router.push({
+      pathname: "./movie/[id]",
+      params: { id: movie.imdbID },
+    });
+  };
 
   return (
     <LinearGradient
@@ -315,6 +311,7 @@ const handleSelectMovie = (movie: any) => {
 
         {/* Movie Grid */}
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={results}
           keyExtractor={(item) => item.imdbID}
           numColumns={2}
@@ -384,51 +381,51 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     fontFamily: "BBHSansBartle",
   },
-searchContainer: {
-  flexDirection: "row",
-  backgroundColor: "rgba(255, 255, 255, 0.1)", // saydam beyaz arka plan
-  borderRadius: 20,
-  borderWidth: 1,
-  borderColor: "rgba(255, 255, 255, 0.2)", // dış hatlar parlak beyaz
-  alignItems: "center",
-  justifyContent: "center",
-  paddingHorizontal: 12,
-  marginBottom: 20,
-  shadowColor: "#000",
-  shadowOpacity: 0.3,
-  shadowOffset: { width: 0, height: 4 },
-  shadowRadius: 10,
-  elevation: 6, // Android için gölge
-  backdropFilter: "blur(10px)", // Web için blur efekti
-},
+  searchContainer: {
+    flexDirection: "row",
+    backgroundColor: "rgba(255, 255, 255, 0.1)", // saydam beyaz arka plan
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)", // dış hatlar parlak beyaz
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 12,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 10,
+    elevation: 6, // Android için gölge
+    backdropFilter: "blur(10px)", // Web için blur efekti
+  },
 
-  input: { flex: 1, height: 48, color: "beige", fontSize: 13, opacity:0.5 },
+  input: { flex: 1, height: 48, color: "beige", fontSize: 13, opacity: 0.5 },
   button: {
-    opacity:0.4,
+    opacity: 0.4,
     padding: 12,
     borderRadius: 0,
     marginLeft: 8,
     borderLeftWidth: 1,
     borderLeftColor: "beige",
-    color:"beige",
+    color: "beige",
   },
-dropdown: {
-  position: "absolute", 
-  top: 130, 
-  width: "100%",                         
-  backgroundColor: "rgba(030, 030, 030, 0.95)",
-  borderRadius: 12,
-  borderWidth: 1,
-  borderColor: "rgba(255, 255, 255, 0.3)",
-  maxHeight: 300,
-  shadowColor: "#000",
-  shadowOpacity: 0.3,
-  shadowOffset: { width: 0, height: 4 },
-  shadowRadius: 10,
-  elevation: 8,
-  backdropFilter: "blur(20px)",
-  zIndex: 999, 
-},
+  dropdown: {
+    position: "absolute",
+    top: 130,
+    width: "100%",
+    backgroundColor: "rgba(030, 030, 030, 0.95)",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+    maxHeight: 300,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 10,
+    elevation: 8,
+    backdropFilter: "blur(20px)",
+    zIndex: 999,
+  },
   dropdownItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -437,23 +434,23 @@ dropdown: {
     borderBottomColor: "#374151",
   },
   dropdownPoster: { width: 40, height: 60, borderRadius: 4 },
-movieCard: {
-  backgroundColor: "rgba(255, 255, 255, 0.1)", // saydam beyaz zemin
-  borderRadius: 12,
-  borderWidth: 1,
-  borderColor: "rgba(255, 255, 255, 0.1)", // dış çerçeve hafif beyaz
-  overflow: "hidden",
-  width: "48%",
-  marginBottom: 16,
-  position: "relative",
-  // Parlak cam efekti
-  shadowColor: "#000",
-  shadowOpacity: 0.3,
-  shadowOffset: { width: 0, height: 4 },
-  shadowRadius: 10,
-  elevation: 6, // Android desteği
-  backdropFilter: "blur(10px)", 
-},
+  movieCard: {
+    backgroundColor: "rgba(255, 255, 255, 0.1)", // saydam beyaz zemin
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)", // dış çerçeve hafif beyaz
+    overflow: "hidden",
+    width: "48%",
+    marginBottom: 16,
+    position: "relative",
+    // Parlak cam efekti
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 10,
+    elevation: 6, // Android desteği
+    backdropFilter: "blur(10px)",
+  },
   poster: { width: "100%", height: 210 },
   movieTitle: {
     color: "#E5E7EB",
