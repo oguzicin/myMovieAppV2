@@ -401,6 +401,7 @@ searchContainer: {
   elevation: 6, // Android için gölge
   backdropFilter: "blur(10px)", // Web için blur efekti
 },
+
   input: { flex: 1, height: 48, color: "beige", fontSize: 13, opacity:0.5 },
   button: {
     opacity:0.4,

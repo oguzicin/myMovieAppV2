@@ -3,14 +3,14 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 
 import {
-    ActivityIndicator,
-    Dimensions,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const API_KEY = process.env.EXPO_PUBLIC_OMDB_API_KEY;
@@ -57,9 +57,21 @@ export default function MovieDetail() {
           </Text>
         </TouchableOpacity>
 
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* POSTER + Overlay */}
           {movie.Poster && movie.Poster !== "N/A" && (
-            <Image source={{ uri: movie.Poster }} style={styles.image} />
+            <View style={styles.posterWrapper}>
+              <Image source={{ uri: movie.Poster }} style={styles.image} />
+
+              {/* 🔥 ALT %15 OPACITY EFEKTİ BURADA */}
+              <LinearGradient
+                colors={["transparent", "rgba(0,0,0,1)"]}
+                style={styles.posterOverlay}
+              />
+            </View>
           )}
 
           <Text style={styles.title}>{movie.Title}</Text>
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
   gradientParent: {
     flex: 1,
     overflow: "hidden",
-    alignItems: "center", 
+    alignItems: "center",
   },
   innerContainer: {
     width: "100%",
@@ -158,10 +170,39 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   scrollContent: {
-    padding: 10,
+    padding: 0,
     paddingBottom: 40,
   },
-  image: { marginTop: 0, width: "100%", height: 435, borderRadius: 8},
+
+  /** POSTER + OVERLAY */
+  posterWrapper: {
+    width: "100%",
+    height: 450,
+
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    overflow: "hidden",
+    position: "relative",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+
+  /*
+  posterWrapper: { width: "100%", height: 450, borderRadius: 8, overflow: "hidden", position: "relative", },
+
+  image: { marginTop: 0, width: "100%", height: 435, borderTopRightRadius: 8, borderTopLeftRadius: 8},
+  */
+  posterOverlay: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: "40%", // Alt %15 alan
+  },
 
   title: {
     fontSize: 28,
@@ -184,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)", 
+    borderColor: "rgba(255, 255, 255, 0.1)",
     paddingVertical: 6,
     paddingHorizontal: 12,
     margin: 3,
