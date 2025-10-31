@@ -47,7 +47,7 @@ export default function MovieDetail() {
 
   return (
     <LinearGradient
-      colors={["#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#070016", "#212267"]}
+      colors={["#000000", "#000000", "#070016", "#212267"]}
       style={styles.gradientParent}
     >
       <View style={styles.innerContainer}>
@@ -74,7 +74,23 @@ export default function MovieDetail() {
             </View>
           )}
 
-          <Text style={styles.title}>{movie.Title}</Text>
+          {/* TITLE WRAPPER with FADE BG */}
+<View style={styles.titleWrapper}>
+  <LinearGradient
+    colors={[
+      "rgba(0,0,0,1)",      // tam siyah
+      "rgba(0,0,0,0.75)",
+      "rgba(0,0,0,0.45)",
+      "rgba(0,0,0,0.20)",
+      "transparent"         // aşağı doğru fade
+    ]}
+    style={styles.titleFadeBg}
+  />
+
+  <Text style={styles.title}>{movie.Title}</Text>
+</View>
+
+
           <Text style={styles.year}>{movie.Year}</Text>
 
           {/* Genre Tags */}
@@ -173,6 +189,24 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingBottom: 40,
   },
+  titleWrapper: {
+  width: "100%",
+  position: "relative",
+  paddingTop: 25,   // fade görünmesi için alan
+  paddingBottom: 15,
+  alignItems: "center",
+  overflow: "hidden",
+},
+
+titleFadeBg: {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  height: 120,     // fade yüksekliği (yumuşaklık burada)
+  zIndex: -1,      // textin arkasında kalacak
+},
+
 
   /** POSTER + OVERLAY */
   posterWrapper: {
