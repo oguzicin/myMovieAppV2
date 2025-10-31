@@ -82,6 +82,7 @@ export default function MovieDetail() {
       "rgba(0,0,0,0.75)",
       "rgba(0,0,0,0.45)",
       "rgba(0,0,0,0.20)",
+            "rgba(0,0,0,0)",
       "transparent"         // aşağı doğru fade
     ]}
     style={styles.titleFadeBg}
