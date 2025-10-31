@@ -334,7 +334,10 @@ useEffect(() => {
                   <Text style={{ color: "#D1D5DB" }}>No Poster</Text>
                 </View>
               )}
-
+              <LinearGradient
+                colors={["rgba(0,0,0,0.75)", "transparent"]}
+                style={styles.topFade}
+              />
               <Text style={styles.movieTitle}>{item.Title}</Text>
               <Text style={styles.movieYear}>{item.Year}</Text>
 
@@ -372,6 +375,16 @@ const styles = StyleSheet.create({
     maxWidth: 375,
     flex: 1,
   },
+  topFade: {
+  width: "100%",
+  height: 70, // istediğin geçiş uzunluğu
+  position: "absolute",
+  top: 450 - 70, // poster height - this fade height
+  left: 0,
+  right: 0,
+  zIndex: 10,
+},
+
   title: {
     fontSize: 32,
     fontWeight: "bold",
