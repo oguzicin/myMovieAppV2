@@ -79,7 +79,7 @@ export default function MovieDetail() {
   <LinearGradient
     colors={[
       "rgba(0,0,0,1)",      // tam siyah
-      "rgba(0,0,0,0.75)",
+      "rgba(0,0,0,0.8)",
       "rgba(0,0,0,0.45)",
       "rgba(0,0,0,0.20)",
       
@@ -204,7 +204,7 @@ titleFadeBg: {
   top: 0,
   left: 0,
   right: 0,
-  height: 120,     // fade yüksekliği (yumuşaklık burada)
+  height: 100,     // fade yüksekliği (yumuşaklık burada)
   zIndex: -1,      // textin arkasında kalacak
 },
 
