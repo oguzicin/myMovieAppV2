@@ -79,9 +79,9 @@ export default function MovieDetail() {
   <LinearGradient
     colors={[
       "rgba(0,0,0,1)",      // tam siyah
-      "rgba(0,0,0,0.8)",
-      "rgba(0,0,0,0.45)",
-      "rgba(0,0,0,0.20)",
+      "rgba(0,0,0,0.75)",
+      "rgba(0,0,0,0.35)",
+      "rgba(0,0,0,0.10)",
       
       "transparent"         // aşağı doğru fade
     ]}
