@@ -212,7 +212,7 @@ titleFadeBg: {
   /** POSTER + OVERLAY */
   posterWrapper: {
     width: "100%",
-    height: 450,
+    height: 435,
 
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
