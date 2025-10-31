@@ -75,22 +75,21 @@ export default function MovieDetail() {
           )}
 
           {/* TITLE WRAPPER with FADE BG */}
-<View style={styles.titleWrapper}>
-  <LinearGradient
-    colors={[
-      "rgba(0,0,0,1)",      // tam siyah
-      "rgba(0,0,0,0.75)",
-      "rgba(0,0,0,0.35)",
-      "rgba(0,0,0,0.10)",
-      
-      "transparent"         // aşağı doğru fade
-    ]}
-    style={styles.titleFadeBg}
-  />
+          <View style={styles.titleWrapper}>
+            <LinearGradient
+              colors={[
+                "rgba(0,0,0,1)", // tam siyah
+                "rgba(0,0,0,0.75)",
+                "rgba(0,0,0,0.35)",
+                "rgba(0,0,0,0.10)",
 
-  <Text style={styles.title}>{movie.Title}</Text>
-</View>
+                "transparent", // aşağı doğru fade
+              ]}
+              style={styles.titleFadeBg}
+            />
 
+            <Text style={styles.title}>{movie.Title}</Text>
+          </View>
 
           <Text style={styles.year}>{movie.Year}</Text>
 
@@ -138,30 +137,31 @@ export default function MovieDetail() {
               }
               return null;
             })}
+          <View style={styles.generalContent}>
+            <Text style={styles.sectionTitle}>Plot</Text>
+            <Text style={styles.overview}>{movie.Plot}</Text>
 
-          <Text style={styles.sectionTitle}>Plot</Text>
-          <Text style={styles.overview}>{movie.Plot}</Text>
+            <Text style={styles.sectionTitle}>Runtime</Text>
+            <Text style={styles.info}>{movie.Runtime}</Text>
 
-          <Text style={styles.sectionTitle}>Runtime</Text>
-          <Text style={styles.info}>{movie.Runtime}</Text>
+            <Text style={styles.sectionTitle}>Director</Text>
+            <Text style={styles.info}>{movie.Director}</Text>
 
-          <Text style={styles.sectionTitle}>Director</Text>
-          <Text style={styles.info}>{movie.Director}</Text>
+            <Text style={styles.sectionTitle}>Writer</Text>
+            <Text style={styles.info}>{movie.Writer}</Text>
 
-          <Text style={styles.sectionTitle}>Writer</Text>
-          <Text style={styles.info}>{movie.Writer}</Text>
+            <Text style={styles.sectionTitle}>Actors</Text>
+            <Text style={styles.info}>{movie.Actors}</Text>
 
-          <Text style={styles.sectionTitle}>Actors</Text>
-          <Text style={styles.info}>{movie.Actors}</Text>
+            <Text style={styles.sectionTitle}>Language</Text>
+            <Text style={styles.info}>{movie.Language}</Text>
 
-          <Text style={styles.sectionTitle}>Language</Text>
-          <Text style={styles.info}>{movie.Language}</Text>
+            <Text style={styles.sectionTitle}>Country</Text>
+            <Text style={styles.info}>{movie.Country}</Text>
 
-          <Text style={styles.sectionTitle}>Country</Text>
-          <Text style={styles.info}>{movie.Country}</Text>
-
-          <Text style={styles.sectionTitle}>Awards</Text>
-          <Text style={styles.info}>{movie.Awards}</Text>
+            <Text style={styles.sectionTitle}>Awards</Text>
+            <Text style={styles.info}>{movie.Awards}</Text>
+          </View>
         </ScrollView>
       </View>
     </LinearGradient>
@@ -179,6 +179,9 @@ const styles = StyleSheet.create({
     maxWidth: 375,
     flex: 1,
   },
+    generalContent: {
+      padding:10,
+  },
   moviezHeader: {
     fontFamily: "BBHSansBartle",
     color: "beige",
@@ -191,23 +194,22 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   titleWrapper: {
-  width: "100%",
-  position: "relative",
-  paddingTop: 25,   // fade görünmesi için alan
-  paddingBottom: 15,
-  alignItems: "center",
-  overflow: "hidden",
-},
+    width: "100%",
+    position: "relative",
+    paddingTop: 25, // fade görünmesi için alan
+    paddingBottom: 15,
+    alignItems: "center",
+    overflow: "hidden",
+  },
 
-titleFadeBg: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  height: 80,     // fade yüksekliği (yumuşaklık burada)
-  zIndex: -1,      // textin arkasında kalacak
-},
-
+  titleFadeBg: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 80, // fade yüksekliği (yumuşaklık burada)
+    zIndex: -1, // textin arkasında kalacak
+  },
 
   /** POSTER + OVERLAY */
   posterWrapper: {
