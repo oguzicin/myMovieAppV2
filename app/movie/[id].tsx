@@ -204,7 +204,7 @@ titleFadeBg: {
   top: 0,
   left: 0,
   right: 0,
-  height: 100,     // fade yüksekliği (yumuşaklık burada)
+  height: 80,     // fade yüksekliği (yumuşaklık burada)
   zIndex: -1,      // textin arkasında kalacak
 },
 
